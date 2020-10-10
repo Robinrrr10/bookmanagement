@@ -11,5 +11,6 @@ RUN mvn -f /home/app/pom.xml clean install package
 #
 FROM tomcat:8.5
 COPY --from=mavenbuild /home/app/target/*.war /usr/local/tomcat/webapps/
+ENV mysqlHost=mysqlserver mysqlPort=3306 mysqlDatabase=book mysqlUser=apper mysqlPass=app123
 EXPOSE 8080
 CMD ["catalina.sh", "run"]

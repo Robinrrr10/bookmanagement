@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,16 +13,32 @@ public class DBUtils {
 
 	String mysqlDriver = "com.mysql.cj.jdbc.Driver";
 	String mysqlHost = "";
-	String mysqlPort = "3306";
-	String mysqlDatabase = "book";
-	String mysqlUser = "apper";
-	String mysqlPass = "app123";
+	String mysqlPort = "";
+	String mysqlDatabase = "";
+	String mysqlUser = "";
+	String mysqlPass = "";
 	Connection connection = null;
 	
 	public DBUtils() {
-		mysqlHost = System.getenv("mysqlhost");
+		mysqlHost = System.getenv("mysqlHost");
 		if(mysqlHost == null || mysqlHost.equals("")) {
 			mysqlHost = "192.168.222.62";
+		}
+		mysqlPort = System.getenv("mysqlPort");
+		if(mysqlPort == null || mysqlPort.equals("")) {
+			mysqlPort = "3306";
+		}
+		mysqlDatabase = System.getenv("mysqlDatabase");
+		if(mysqlDatabase == null || mysqlDatabase.equals("")) {
+			mysqlDatabase = "book";
+		}
+		mysqlUser = System.getenv("mysqlUser");
+		if(mysqlUser == null || mysqlUser.equals("")) {
+			mysqlUser = "apper";
+		}
+		mysqlPass = System.getenv("mysqlPass");
+		if(mysqlPass == null || mysqlPass.equals("")) {
+			mysqlPass = "app123";
 		}
 		try {
 			Class.forName(mysqlDriver);
@@ -31,7 +48,7 @@ public class DBUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		this.modifyDb();
 	}
 	
 	public List<String> getBooks() {
@@ -62,5 +79,20 @@ public class DBUtils {
 			e.printStackTrace();
 		}
 		return booknames;
+	}
+	
+	private void modifyDb() {
+		String createBookDetailTable = "CREATE TABLE IF NOT EXISTS `bookdetail` (\r\n" + 
+				"  `id` int NOT NULL AUTO_INCREMENT,\r\n" + 
+				"  `name` varchar(50) DEFAULT NULL,\r\n" + 
+				"  `description` varchar(200) DEFAULT NULL,\r\n" + 
+				"  PRIMARY KEY (`id`)\r\n" + 
+				");";
+		try {
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(createBookDetailTable);	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
