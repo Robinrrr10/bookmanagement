@@ -48,7 +48,7 @@ public class DBUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.modifyDb();
+		this.modifyDb(connection);
 	}
 	
 	public List<String> getBooks() {
@@ -81,7 +81,7 @@ public class DBUtils {
 		return booknames;
 	}
 	
-	private void modifyDb() {
+	private void modifyDb(Connection connection) {
 		String createBookDetailTable = "CREATE TABLE IF NOT EXISTS `bookdetail` (\r\n" + 
 				"  `id` int NOT NULL AUTO_INCREMENT,\r\n" + 
 				"  `name` varchar(50) DEFAULT NULL,\r\n" + 
