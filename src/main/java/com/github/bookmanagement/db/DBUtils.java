@@ -17,7 +17,7 @@ public class DBUtils {
 	String mysqlDatabase = "";
 	String mysqlUser = "";
 	String mysqlPass = "";
-	Connection connection = null;
+	static Connection connection = null;
 	
 	public DBUtils() {
 		mysqlHost = System.getenv("mysqlHost");
