@@ -20,6 +20,7 @@ public class DBUtils {
 	static Connection connection = null;
 	
 	public DBUtils() {
+		System.out.println("Give env values");
 		mysqlHost = System.getenv("mysqlHost");
 		if(mysqlHost == null || mysqlHost.equals("")) {
 			mysqlHost = "192.168.222.62";
