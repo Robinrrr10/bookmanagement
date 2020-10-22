@@ -43,7 +43,7 @@ public class DBUtils {
 		}
 		try {
 			Class.forName(mysqlDriver);
-			String mysqlUrl = "jdbc:mysql://"+mysqlHost+":"+mysqlPort+"/"+mysqlDatabase+"?useSSL=false";
+			String mysqlUrl = "jdbc:mysql://"+mysqlHost+":"+mysqlPort+"/"+mysqlDatabase+"?allowPublicKeyRetrieval=true&useSSL=false";
 			System.out.println("Mysql url is:" + mysqlUrl);
 			connection = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
 		} catch (Exception e) {
